@@ -209,4 +209,7 @@ clean:
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
 
+flash: all
+	echo "reset halt\nflash write_image erase $$(PWD)/$(BUILD_DIR)/$(TARGET).bin 0x08000000 bin\nreset run\nexit\n" | nc localhost 4444
+
 # *** EOF ***
