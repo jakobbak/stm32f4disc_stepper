@@ -1,5 +1,6 @@
 -DSTM32F407xx
 -IInc
+-IApplication/inc
 -IDrivers/STM32F4xx_HAL_Driver/Inc
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy
 -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc
