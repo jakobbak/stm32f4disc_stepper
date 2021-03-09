@@ -4,44 +4,30 @@
 // Application specific includes
 #include "timer.h"
 #include "a4988.h"
+#include "usb_serial.h"
 
 volatile uint32_t time_now_millis;
 volatile float time_now_float;
 
 void setup() {
-    HAL_Delay(5000);
-    char *string = "Initialising the system!\n\r";
-    CDC_Transmit_FS((uint8_t*)string, 27);    
     timer_init();
     a4988_init();
+    usb_serial_init();
+    printf("setup completed!\n\r");
 }
 
 
 void loop() {
     // The loop function is mainly for handling stuff that doesn't have to 
     // happen at specific intervals.
-    // HAL_Delay(1000);
-    // char *string = "Hello World!\n\r";
-    // CDC_Transmit_FS((uint8_t*)string, 15);    
+    usb_serial_handle_tx_buffer_streaming();  
 }
 
 
 void runtime_isr() {
-    static bool tick = false;
-    char *string;
-    if(tick) {
-        string = "tick!\n\r";
-        tick = false;
-    } else {
         string = "tock!\n\r";
         tick = true;
-    }
-    CDC_Transmit_FS((uint8_t*)string, 8);    
-}
-
-
-void stepper_isr() {
-    
+    printf("time is now %i seconds!\n\r", time_now_millis/1000);
 }
 
 
