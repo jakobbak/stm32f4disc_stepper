@@ -1,4 +1,5 @@
 // #include "app.h"
+#include "tim.h"
 #include "a4988.h"
 
 a4988_pins_t a4988;
@@ -38,6 +39,7 @@ void a4988_init(void) {
     reset(a4988.ms1);
     reset(a4988.ms2);
     reset(a4988.ms3);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 }
 
 void a4988_set_dir(bool forward) {

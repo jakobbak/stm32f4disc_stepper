@@ -29,7 +29,6 @@ void loop() {
 void runtime_isr() {
     static bool tick = false;
     char *string;
-    a4988_step();    
     if(tick) {
         string = "tick!\n\r";
         tick = false;
@@ -37,7 +36,12 @@ void runtime_isr() {
         string = "tock!\n\r";
         tick = true;
     }
-    CDC_Transmit_FS((uint8_t*)string, 8);
+    CDC_Transmit_FS((uint8_t*)string, 8);    
+}
+
+
+void stepper_isr() {
+    
 }
 
 
