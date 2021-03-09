@@ -1,6 +1,9 @@
 #include "main.h"
 #include "usbd_cdc_if.h"
 
+// Application specific includes
+#include "timer.h"
+
 volatile uint32_t time_now_millis;
 volatile float time_now_float;
 
@@ -8,13 +11,22 @@ void setup() {
     HAL_Delay(5000);
     char *string = "Initialising the system!\n\r";
     CDC_Transmit_FS((uint8_t*)string, 27);    
+    timer_init();
 }
 
 
 void loop() {
-    HAL_Delay(1000);
+    // The loop function is mainly for handling stuff that doesn't have to 
+    // happen at specific intervals.
+    // HAL_Delay(1000);
+    // char *string = "Hello World!\n\r";
+    // CDC_Transmit_FS((uint8_t*)string, 15);    
+}
+
+
+void runtime_isr() {
     char *string = "Hello World!\n\r";
-    CDC_Transmit_FS((uint8_t*)string, 15);    
+    CDC_Transmit_FS((uint8_t*)string, 15);        
 }
 
 
