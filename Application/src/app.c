@@ -3,6 +3,7 @@
 
 // Application specific includes
 #include "timer.h"
+#include "a4988.h"
 
 volatile uint32_t time_now_millis;
 volatile float time_now_float;
@@ -12,6 +13,7 @@ void setup() {
     char *string = "Initialising the system!\n\r";
     CDC_Transmit_FS((uint8_t*)string, 27);    
     timer_init();
+    a4988_init();
 }
 
 
@@ -25,8 +27,17 @@ void loop() {
 
 
 void runtime_isr() {
-    char *string = "Hello World!\n\r";
-    CDC_Transmit_FS((uint8_t*)string, 15);        
+    static bool tick = false;
+    char *string;
+    a4988_step();    
+    if(tick) {
+        string = "tick!\n\r";
+        tick = false;
+    } else {
+        string = "tock!\n\r";
+        tick = true;
+    }
+    CDC_Transmit_FS((uint8_t*)string, 8);
 }
 
 
