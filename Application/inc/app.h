@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define RUNTIME_ISR_MICROSECONDS 1000000
+
 extern volatile uint32_t time_now_millis;
 extern volatile float time_now_float;
 
