@@ -1,3 +1,4 @@
+#include <math.h>
 #include "main.h"
 #include "usbd_cdc_if.h"
 
@@ -10,10 +11,13 @@ volatile uint32_t time_now_millis;
 volatile float time_now_float;
 
 void setup() {
-    timer_init();
-    a4988_init();
     usb_serial_init();
+    // HAL_Delay(1000);
+    a4988_init();
     printf("setup completed!\n\r");
+    a4988_set_step_divisions(16);
+    a4988_velocity_mode(0.0f);
+    timer_init();
 }
 
 
@@ -25,9 +29,12 @@ void loop() {
 
 
 void runtime_isr() {
-        string = "tock!\n\r";
-        tick = true;
-    printf("time is now %i seconds!\n\r", time_now_millis/1000);
+    static bool run_once = false;
+    static float radians = M_PI / 2.0;
+    if(time_now_millis/1000 > 10 && !run_once) {
+        a4988_step_rpm(a4988_get_steps_from_radians(radians), 60.0f);
+        run_once = true;
+    }
 }
 
 

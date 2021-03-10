@@ -21,8 +21,30 @@ typedef struct {
     pin_t step;
 } a4988_pins_t;
 
+typedef struct {
+    a4988_pins_t pins;
+    uint32_t num_full_steps;
+    uint32_t step_divisions;
+    uint32_t num_microsteps;    
+    bool forward;
+    int32_t step;
+    int32_t target;
+    float rpm;
+    bool velocity_mode;
+    uint32_t microseconds_per_step;
+} a4988_t;
+
 void a4988_init(void);
-void a4988_dir(bool forward);
-void a4988_step(void);
+bool a4988_step(uint32_t steps);
+void a4988_step_rpm(uint32_t steps, float rpm);
+void a4988_velocity_mode(float rpm);
+void a4988_set_forward(bool forward);
+bool a4988_set_step_divisions(uint32_t div); // can only be 1, 2, 4, 8 or 16
+void a4988_set_velocity(float vel);
+uint32_t a4988_get_target(void);
+uint32_t a4988_get_step(void);
+void a4988_set_rpm(float rpm);
+float a4988_get_rpm(void);
+uint32_t a4988_get_steps_from_radians(float rad);
 
 #endif // A4988_H
