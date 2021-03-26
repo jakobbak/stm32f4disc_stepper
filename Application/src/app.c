@@ -16,7 +16,7 @@ void setup() {
     a4988_init();
     printf("setup completed!\n\r");
     a4988_set_step_divisions(16);
-    a4988_velocity_mode(0.0f);
+    a4988_velocity_mode(400.0f);
     timer_init();
 }
 
@@ -29,12 +29,24 @@ void loop() {
 
 
 void runtime_isr() {
-    static bool run_once = false;
-    static float radians = M_PI / 2.0;
-    if(time_now_millis/1000 > 10 && !run_once) {
-        a4988_step_rpm(a4988_get_steps_from_radians(radians), 60.0f);
-        run_once = true;
-    }
+    // // printf("runtime_isr\r\n");
+    // static float rpm = 0.0f;
+    // // const float dt = 1.0f;
+    // const float rpm_limit = 300.0f;
+    // if (rpm < rpm_limit) {
+    //     // float new_rpm = rpm + rpm_limit / dt * (float)(1000000 / RUNTIME_ISR_MICROSECONDS);
+    //     printf("%.3f\n\r", (double)rpm);
+    //     rpm += 1.0f;
+    // } else {
+    //     // printf("%.3f\n\r", (double)rpm);
+    // }
+    // a4988_velocity_mode(rpm);    
+    // // static bool run_once = false;
+    // // static float radians = M_PI / 2.0;
+    // // if(time_now_millis/1000 > 2 && !run_once) {
+    // //     a4988_step_rpm(a4988_get_steps_from_radians(radians), 60.0f);
+    // //     // run_once = true;
+    // // }
 }
 
 

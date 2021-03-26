@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define RUNTIME_ISR_MICROSECONDS 1000000
+#define RUNTIME_ISR_MICROSECONDS 100000
 #define STEPPER_MICROSECONDS     1000000
 
 extern volatile uint32_t time_now_millis;
